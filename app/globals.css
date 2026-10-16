@@ -12,7 +12,7 @@
   --color-line-strong: #36423b;
   --color-text: #e8ece9;
   --color-text-2: #9aa59f;
-  --color-text-3: #66716b;
+  --color-text-3: #7d887f; /* 5.2:1 on bg, 4.9:1 on surface */
   --color-accent: #8e9cff;
   --color-accent-soft: #1d2444;
   --color-ok: #5bc98b;

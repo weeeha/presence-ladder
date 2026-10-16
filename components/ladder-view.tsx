@@ -28,13 +28,21 @@ export function LadderView({ exchange }: { exchange: Exchange }) {
     sourceRef.current = source;
     source.on("state", (s, at) => ladder.setState(s, at));
     source.on("turn", (turn, index) => ladder.setCaption(turn?.role ?? null, turn?.text ?? null, index));
-    source.on("audioStart", (at) => ladder.markAudioStart(at));
+    source.on("audioStart", (at, index) => {
+      ladder.markAudioStart(at);
+      // Wall-clock stamp for the film tool, which muxes the fixture audio onto a screen recording.
+      console.info("ladder:audio", index, Math.round(Date.now() + (at - performance.now())));
+    });
     source.on("error", (message) => {
       setError(message);
       ladder.setRunning(false);
     });
-    source.on("done", () => ladder.setRunning(false));
+    source.on("done", () => {
+      ladder.setRunning(false);
+      console.info("ladder:done", Date.now());
+    });
     ladder.setRunning(true);
+    console.info("ladder:start", Date.now());
     await source.start();
   };
 
@@ -69,7 +77,7 @@ export function LadderView({ exchange }: { exchange: Exchange }) {
           <button
             type="button"
             onClick={snap.running ? stop : start}
-            className={`h-10 shrink-0 rounded-s border px-4 text-14 ${
+            className={`h-10 min-w-40 shrink-0 rounded-s border px-4 text-14 ${
               snap.running ? "border-line-strong text-text" : "border-accent bg-accent-soft text-accent"
             }`}
           >
