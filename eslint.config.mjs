@@ -7,6 +7,9 @@ const eslintConfig = defineConfig([
   ...nextTs,
   // Override default ignores of eslint-config-next.
   globalIgnores([
+    // Vendored runtimes: AI-Avatars (public/avatars) and AI-Orb (vendor). Fix upstream, then re-copy.
+    "public/**",
+    "vendor/**",
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
