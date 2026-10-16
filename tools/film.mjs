@@ -3,7 +3,7 @@
 // Usage: node tools/film.mjs [url] [out.mp4]
 import { chromium } from "@playwright/test";
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readdirSync, renameSync, rmSync } from "node:fs";
+import { mkdirSync, readdirSync, rmSync } from "node:fs";
 import path from "node:path";
 
 const url = process.argv[2] ?? "http://localhost:3017/";
