@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Presence ladder
 
-## Getting Started
+**How much face does an agent need?**
 
-First, run the development server:
+One agent, four presences, the same moment. The same agent state is rendered side by side as an orb, a character with eyes, a lip-synced portrait, and a generated human. Under each rung a small readout shows what it costs to react: milliseconds, compute, and what it can and cannot express.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Three of the rungs come from my own earlier work:
+
+| Rung | Source | In this slice |
+|---|---|---|
+| 01 Orb | [AI-Orb](https://github.com/weeeha/AI-Orb), one WebGL program, audio-reactive | live, vendored in `vendor/ai-orb` |
+| 02 Character | [AI-Avatars](https://github.com/weeeha/AI-Avatars), 50 characters for a round display; this page uses the assistant iris | live, runtime copied to `public/avatars` |
+| 03 Portrait | MuseTalk lip-sync, the "presence C" path from my interview simulator | still portrait; pre-rendered clips land when they are rendered |
+| 04 Generated human | Runway's avatar SDK on GWM-1 | not in this slice; the tile says so |
+
+## Modes
+
+- **Fixture** (this deploy): a scripted exchange plays. User lines are captions. Agent replies are pre-rendered with my cloned voice (Qwen3-TTS) and played through a real `AudioContext`, so every level and stream a rung sees is real audio. No keys, no microphone.
+- **Live** (full build): a microphone, a live agent through Runway's SDK, live lip-sync on a local GPU. Not deployed.
+
+## What is measured
+
+- **react**: from the agent's state change to the rung's next painted frame, measured in your browser, within one frame.
+- **lips**: from the first audio sample to the first mouth movement. "none" when the rung has no mouth.
+- **cost / min** and **expresses** are facts about each renderer, not measurements.
+
+Nothing on the page is a fallback shown as live. A rung that cannot render says so in its readout.
+
+## Run
+
+```sh
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm vitest run   # store, metrics, fixture schedule
+pnpm tsc --noEmit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/            page and layout
+components/     ladder view, state strip, tile, HUD
+rungs/          one component per rung
+lib/            agent source interface, fixture source, ladder store, metrics
+fixture/        exchange.json and the agent WAVs (public/fixture)
+public/avatars/ AI-Avatars runtime, copied as-is
+vendor/ai-orb/  AI-Orb sources, copied as-is
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Spec and plan: `Runaway/builds/12-presence-ladder` in my prep workspace.

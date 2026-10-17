@@ -1,0 +1,12 @@
+{
+  "title": "Placeholder exchange. Nick replaces these six lines (spec decision 5).",
+  "voice": "Agent replies pre-rendered with Nick's cloned voice (Qwen3-TTS). User lines are captions; no microphone is used in fixture mode.",
+  "turns": [
+    { "role": "user", "text": "Can you hear me? What are you doing right now?", "durationMs": 3200 },
+    { "role": "agent", "text": "I can. I am listening, and when you stop I think for a moment before I answer.", "audio": "agent-1.wav" },
+    { "role": "user", "text": "How do you decide what to show me while you think?", "durationMs": 3400 },
+    { "role": "agent", "text": "I do not. The page does. Each of these four is the same state, drawn with a different amount of face.", "audio": "agent-2.wav" },
+    { "role": "user", "text": "Which one should I trust?", "durationMs": 2400 },
+    { "role": "agent", "text": "The one that tells you what it costs. The orb reacts in a frame. The portrait is six hundred milliseconds behind.", "audio": "agent-3.wav" }
+  ]
+}
