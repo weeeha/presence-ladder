@@ -2,6 +2,10 @@
 
 **How much face does an agent need?**
 
+![The four rungs while the agent speaks: orb, iris character, portrait, and the generated-human placeholder](docs/screenshots/ladder-speaking.webp)
+
+**Live:** https://presence-ladder.vercel.app
+
 One agent, four presences, the same moment. The same agent state is rendered side by side as an orb, a character with eyes, a lip-synced portrait, and a generated human. Under each rung a small readout shows what it costs to react: milliseconds, compute, and what it can and cannot express.
 
 Three of the rungs come from my own earlier work:
@@ -46,5 +50,15 @@ fixture/        exchange.json and the agent WAVs (public/fixture)
 public/avatars/ AI-Avatars runtime, copied as-is
 vendor/ai-orb/  AI-Orb sources, copied as-is
 ```
+
+## Screenshots
+
+![Idle state before the exchange starts, react readouts show "not measured yet"](docs/screenshots/ladder-idle.webp)
+
+Idle, before the exchange plays.
+
+![Third agent reply, react readouts filled in after nine samples](docs/screenshots/ladder-reply-3.webp)
+
+Third agent reply, with the measured react time per rung.
 
 Spec and plan: `Runaway/builds/12-presence-ladder` in my prep workspace.
