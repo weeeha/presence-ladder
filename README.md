@@ -4,6 +4,14 @@
 
 ![The four rungs while the agent speaks: orb, iris character, portrait, and the generated-human placeholder](docs/screenshots/ladder-speaking.webp)
 
+**Problem.** An agent can appear as an orb, a character with eyes, a lip-synced portrait or a generated human, and each costs a different amount in reaction time, compute and expressiveness.
+
+**Idea.** Render the same agent state in all four presences side by side, with a readout under each rung showing what it costs to react and what it can and cannot express.
+
+**Built.** A thin-slice Next.js 16 page, live at https://presence-ladder.vercel.app: the orb (from AI-Orb) and the iris character (from AI-Avatars) are live, the portrait is a still, and the generated human is a placeholder that says so. 8 commits on 4 days, Oct 16 to Oct 25, 2026.
+
+**Decision.** The deployed page plays a scripted exchange with pre-rendered agent audio instead of a live agent, so it needs no keys or microphone, and every rung still reacts to real audio through an `AudioContext`.
+
 **Live:** https://presence-ladder.vercel.app
 
 One agent, four presences, the same moment. The same agent state is rendered side by side as an orb, a character with eyes, a lip-synced portrait, and a generated human. Under each rung a small readout shows what it costs to react: milliseconds, compute, and what it can and cannot express.
